@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { fetchJson } from '../api'
+
+// API base: https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api
+const VITE_CODESPACE_NAME = import.meta.env.VITE_CODESPACE_NAME
+const API_BASE = VITE_CODESPACE_NAME ? `https://${VITE_CODESPACE_NAME}-8000.app.github.dev/api` : '/api'
 
 function normalize(data) {
   if (Array.isArray(data)) return { items: data, total: data.length }
@@ -13,7 +16,8 @@ export default function Teams() {
   const [total, setTotal] = useState(null)
 
   useEffect(() => {
-    fetchJson('/teams')
+    fetch(`${API_BASE}/teams`)
+      .then((r) => r.json())
       .then((d) => {
         const { items, total } = normalize(d)
         setTeams(items)
