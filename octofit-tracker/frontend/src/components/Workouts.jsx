@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 // API base: https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api
+// Codespaces example endpoint: https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/workouts
 const VITE_CODESPACE_NAME = import.meta.env.VITE_CODESPACE_NAME
 const API_BASE = VITE_CODESPACE_NAME ? `https://${VITE_CODESPACE_NAME}-8000.app.github.dev/api` : '/api'
 
