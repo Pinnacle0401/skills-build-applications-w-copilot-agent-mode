@@ -1,0 +1,41 @@
+import React, { useEffect, useState } from 'react'
+
+// API base: https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api
+// Codespaces example endpoint: https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/teams
+const VITE_CODESPACE_NAME = import.meta.env.VITE_CODESPACE_NAME
+const API_BASE = VITE_CODESPACE_NAME ? `https://${VITE_CODESPACE_NAME}-8000.app.github.dev/api` : '/api'
+
+function normalize(data) {
+  if (Array.isArray(data)) return { items: data, total: data.length }
+  if (data && data.results) return { items: data.results, total: data.count ?? data.results.length }
+  if (data && data.items) return { items: data.items, total: data.total ?? data.items.length }
+  return { items: [], total: 0 }
+}
+
+export default function Teams() {
+  const [teams, setTeams] = useState([])
+  const [total, setTotal] = useState(null)
+
+  useEffect(() => {
+    fetch(`${API_BASE}/teams`)
+      .then((r) => r.json())
+      .then((d) => {
+        const { items, total } = normalize(d)
+        setTeams(items)
+        setTotal(total)
+      })
+      .catch(() => {})
+  }, [])
+
+  return (
+    <section>
+      <h2>Teams</h2>
+      <p>Total: {total ?? '...'}</p>
+      <ul>
+        {teams.map((t) => (
+          <li key={t._id}>{t.name} — members: {Array.isArray(t.members) ? t.members.length : 'n/a'}</li>
+        ))}
+      </ul>
+    </section>
+  )
+}
