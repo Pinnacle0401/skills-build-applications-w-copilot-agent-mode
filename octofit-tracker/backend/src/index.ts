@@ -24,13 +24,13 @@ app.use('/api/leaderboard', leaderboardRoutes)
 app.use('/api/workouts', workoutsRoutes)
 
 if (process.env.CODESPACE_NAME) {
-  const codespaceUrl = `https://${process.env.CODESPACE_NAME}-${PORT}.githubpreview.dev`
+  const codespaceUrl = `https://${process.env.CODESPACE_NAME}-${PORT}.app.github.dev`
   console.log(`Codespaces preview URL: ${codespaceUrl}`)
 }
 
 app.listen(PORT, () => {
   const hostUrl = process.env.CODESPACE_NAME
-    ? `https://${process.env.CODESPACE_NAME}-${PORT}.githubpreview.dev`
+    ? `https://${process.env.CODESPACE_NAME}-${PORT}.app.github.dev`
     : `http://localhost:${PORT}`
 
   console.log(`OctoFit backend listening on port ${PORT}`)
