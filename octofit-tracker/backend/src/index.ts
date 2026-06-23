@@ -1,5 +1,5 @@
 import express from 'express'
-import { connectDatabase, MONGO_URL } from './database'
+import { connectDatabase, MONGO_URL } from './config/database'
 import userRoutes from './routes/userRoutes'
 import teamsRoutes from './routes/teamsRoutes'
 import activitiesRoutes from './routes/activitiesRoutes'

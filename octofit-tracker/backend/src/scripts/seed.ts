@@ -6,7 +6,7 @@
  * activities, leaderboards, and workouts.
  */
 
-import { connectDatabase, MONGO_URL } from '../database'
+import { connectDatabase, MONGO_URL } from '../config/database'
 import User from '../models/User'
 import Team from '../models/Team'
 import Activity from '../models/Activity'
