@@ -3,7 +3,7 @@ import User from '../models/User'
 
 const router = Router()
 
-router.get('/users', async (_req, res) => {
+router.get('/', async (_req, res) => {
   try {
     const users = await User.find().limit(50)
     res.json(users)
@@ -12,7 +12,7 @@ router.get('/users', async (_req, res) => {
   }
 })
 
-router.post('/users', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const { name, email } = req.body
     if (!name || !email) return res.status(400).json({ error: 'Missing fields' })

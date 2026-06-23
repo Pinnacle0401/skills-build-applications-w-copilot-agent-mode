@@ -1,5 +1,5 @@
 import express from 'express'
-import mongoose from 'mongoose'
+import { connectDatabase, MONGO_URL } from './database'
 import userRoutes from './routes/userRoutes'
 import teamsRoutes from './routes/teamsRoutes'
 import activitiesRoutes from './routes/activitiesRoutes'
@@ -9,11 +9,10 @@ import workoutsRoutes from './routes/workoutsRoutes'
 const app = express()
 app.use(express.json())
 
-const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost:27017/octofit'
 const PORT = process.env.PORT ? Number(process.env.PORT) : 8000
 
-mongoose.connect(MONGO_URL)
-  .then(() => console.log('Connected to MongoDB'))
+connectDatabase()
+  .then(() => console.log(`Connected to MongoDB at ${MONGO_URL}`))
   .catch((err) => console.error('MongoDB connection error:', err))
 
 app.get('/health', (_req, res) => res.json({status: 'ok'}))
@@ -30,5 +29,10 @@ if (process.env.CODESPACE_NAME) {
 }
 
 app.listen(PORT, () => {
+  const hostUrl = process.env.CODESPACE_NAME
+    ? `https://${process.env.CODESPACE_NAME}-${PORT}.githubpreview.dev`
+    : `http://localhost:${PORT}`
+
   console.log(`OctoFit backend listening on port ${PORT}`)
+  console.log(`API available at ${hostUrl}/api`)
 })
